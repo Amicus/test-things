@@ -29,4 +29,13 @@ describe("When I specify a factory", function() {
     expect(model1.get("title").length).to.be(24)
     expect(model2.get("title")).to.match(/[a-z0-9]{24}/)
   })
+  it("It should use the value from functions", function() {
+    var modelFactory = new Factory(Backbone.Model, {
+      title: function() {
+        return "I'm a title yo"       
+      }//title that starts with
+    })
+    var model = modelFactory.generate()
+    expect(model.get("title")).to.be("I'm a title yo")
+  })
 })
