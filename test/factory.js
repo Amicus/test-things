@@ -39,7 +39,7 @@ describe("When I specify a factory", function() {
     var model = modelFactory.generate()
     expect(model.get("title")).to.be("I'm a title yo")
   })
-  it("It should replace sequences", function() {
+  it("It should generate a collection", function() {
     var modelFactory = new Factory(Backbone.Model, {
       title: "Title Number {{sequence(1)}}" //title that starts with
     })
@@ -50,4 +50,16 @@ describe("When I specify a factory", function() {
     expect(models.at(2).get("title")).to.be("Title Number 3")
     expect(models.at(3).get("title")).to.be("Title Number 4")
   })
+  it("It should generate a collectionFactory", function() {
+    var modelFactory = new Factory(Backbone.Model, {
+      title: "Title Number {{sequence(1)}}" //title that starts with
+    })
+    var collectionFactory = modelFactory.collectionFactory(Backbone.Collection, 4)
+    var models = collectionFactory.generate()
+
+    expect(models.at(0).get("title")).to.be("Title Number 1")
+    expect(models.at(1).get("title")).to.be("Title Number 2")
+    expect(models.at(2).get("title")).to.be("Title Number 3")
+    expect(models.at(3).get("title")).to.be("Title Number 4")
+  }) 
 })
